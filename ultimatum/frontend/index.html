@@ -14,7 +14,7 @@
       .then((j) => {
         console.log('response:', j);
 
-        location.replace(`manage_session.html?session_id=${j.session_id}`);
+        location = `manage_session.html?session_id=${j.session_id}`;
       });
   };
 </script>
