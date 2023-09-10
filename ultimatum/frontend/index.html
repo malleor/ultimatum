@@ -1,2 +1,19 @@
 <h1>New session form</h1>
 This file is proudly served from S3.
+<br/>
+<button onClick="createSession()">Create session</button>
+
+<script type="text/javascript">
+  window.createSession = function() {
+    fetch('https://v0zvhubsma.execute-api.eu-central-1.amazonaws.com/prod/session',
+      {
+        'method': 'POST',
+        'headers': {
+        }
+      })
+      .then((r) => r.json())
+      .then((j) => {
+        console.log('response:', j);
+      });
+  }
+</script>

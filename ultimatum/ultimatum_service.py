@@ -23,8 +23,12 @@ class UltimatumService(Construct):
 
         # config gateway for handling traffic
         api = apigateway.RestApi(self, "ultimatum-api",
-                  rest_api_name="Ultimatum Service",
-                  description="This service handles the Ultimatum app.")
+                    rest_api_name="Ultimatum Service",
+                    description="This service handles the Ultimatum app.",
+                    default_cors_preflight_options=apigateway.CorsOptions(
+                        allow_origins=apigateway.Cors.ALL_ORIGINS,
+                        allow_methods=apigateway.Cors.ALL_METHODS
+                    ))
         create_session_integration = apigateway.LambdaIntegration(create_session_handler)
         join_session_integration = apigateway.LambdaIntegration(join_session_handler)
         # POST /session
