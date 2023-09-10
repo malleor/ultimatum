@@ -15,8 +15,13 @@ def create_session(event, context):
 
 def join_session(event, context):
     print('request: {}'.format(json.dumps(event)))
+    body = json.loads(event['body'])
+    session_id = body['session_id']
     return {
         'statusCode': 200,
         'headers': common_headers,
-        'body': json.dumps({'websocket_topic': 'XXXX'})
+        'body': json.dumps({
+            'session_id': session_id,
+            'websocket_topic': 'XXXX'
+            })
     }

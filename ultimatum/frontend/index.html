@@ -1,6 +1,5 @@
 <h1>New session form</h1>
-This file is proudly served from S3.
-<br/>
+
 <button onClick="createSession()">Create session</button>
 
 <script type="text/javascript">
@@ -14,6 +13,8 @@ This file is proudly served from S3.
       .then((r) => r.json())
       .then((j) => {
         console.log('response:', j);
+
+        location.replace(`manage_session.html?session_id=${j.session_id}`);
       });
-  }
+  };
 </script>
