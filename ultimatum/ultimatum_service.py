@@ -14,7 +14,7 @@ class UltimatumService(Construct):
         table = dynamodb.Table(
             self,
             'Sessions',
-            partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING),
+            partition_key=dynamodb.Attribute(name="session_id", type=dynamodb.AttributeType.STRING),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST
         )
         table_name = table.table_name

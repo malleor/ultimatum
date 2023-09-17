@@ -1,5 +1,6 @@
 <h1>You're joining session <span id="session_id_header">?</span></h1>
 
+<input id="user_name" type="text"/><br/>
 <button onClick="joinSession()">Join session</button>
 
 <script type="text/javascript">
@@ -11,13 +12,16 @@
   header.innerText = session_id;
 
   window.joinSession = function() {
+    const user_name = document.getElementById('user_name').value;
+
     fetch('https://v0zvhubsma.execute-api.eu-central-1.amazonaws.com/prod/session/join',
       {
         'method': 'POST',
         'headers': {
         },
         'body': JSON.stringify({
-          'session_id': session_id
+          'session_id': session_id,
+          'user_name': user_name
         })
       })
       .then((r) => r.json())
