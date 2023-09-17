@@ -1,18 +1,16 @@
 <h1>Manage session <span id="session_id_header">?</span></h1>
 
 <p>
-  To join the session, follow <a href='#' onClick='joinSession()'>this link</a>.
+  To join the session, follow <a href="#" id="join_link" target="_blank">this link</a>.
 </p>
 
 <script type="text/javascript">
   const params     = new URLSearchParams(location.search),
         session_id = params.get('session_id'),
-        header     = document.getElementById('session_id_header');
+        header     = document.getElementById('session_id_header'),
+        link       = document.getElementById('join_link');
 
   console.log('session_id =', session_id);
   header.innerText = session_id;
-
-  window.joinSession = function() {
-    location = `join_session.html?session_id=${session_id}`;
-  };
+  link.href = `join_session.html?session_id=${session_id}`;
 </script>
