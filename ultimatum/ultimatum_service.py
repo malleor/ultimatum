@@ -32,8 +32,15 @@ class UltimatumService(Construct):
                     handler="ultimatum_handler.join_session",
                     environment={'TABLE_NAME': table_name}
                     )
+        get_participants_handler = lambda_.Function(self, "get_participants_handler",
+                    runtime=lambda_.Runtime.PYTHON_3_7,
+                    code=lambda_.Code.from_asset("ultimatum"),
+                    handler="ultimatum_handler.get_participants",
+                    environment={'TABLE_NAME': table_name}
+                    )
         table.grant_full_access(create_session_handler)
         table.grant_full_access(join_session_handler)
+        table.grant_full_access(get_participants_handler)
 
         # config gateway for handling traffic
         api = apigateway.RestApi(self, "ultimatum-api",
@@ -45,12 +52,16 @@ class UltimatumService(Construct):
                     ))
         create_session_integration = apigateway.LambdaIntegration(create_session_handler)
         join_session_integration = apigateway.LambdaIntegration(join_session_handler)
+        get_participants_integration = apigateway.LambdaIntegration(get_participants_handler)
         # POST /session
         session_api = api.root.add_resource('session')
         session_api.add_method("POST", create_session_integration)
         # POST /session/join
         join_api = session_api.add_resource('join')
         join_api.add_method("POST", join_session_integration)
+        # GET /session/participants
+        participants_api = session_api.add_resource('participants')
+        participants_api.add_method("GET", get_participants_integration)
 
         # configure S3 for static frontend
         bucket = s3.Bucket(

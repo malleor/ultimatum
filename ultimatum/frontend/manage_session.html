@@ -4,6 +4,9 @@
   To join the session, follow <a href="#" id="join_link" target="_blank">this link</a>.
 </p>
 
+<button onClick="getParticipants()">Check participants</button>
+<span id="participants_list"></span>
+
 <script type="text/javascript">
   const params     = new URLSearchParams(location.search),
         session_id = params.get('session_id'),
@@ -13,4 +16,20 @@
   console.log('session_id =', session_id);
   header.innerText = session_id;
   link.href = `join_session.html?session_id=${session_id}`;
+
+  window.getParticipants = function() {
+    fetch(`https://v0zvhubsma.execute-api.eu-central-1.amazonaws.com/prod/session/participants?session_id=${session_id}`,
+      {
+        'method': 'GET',
+        'headers': {
+        }
+      })
+      .then((r) => r.json())
+      .then((participants) => {
+        console.log('response:', participants);
+
+        var participants_list = document.getElementById('participants_list');
+        participants_list.innerText = participants.map(p => p.user_name).join(', ');
+      });
+  };
 </script>
